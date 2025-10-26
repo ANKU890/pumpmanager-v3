@@ -37,6 +37,7 @@ export async function deleteAllDocsInCollection(collectionPath: string) {
 seedInitialData();
 
 export async function seedInitialData() {
+    // Seed Owners
     const ownersRef = collection(db, 'owners');
     try {
         const ownersSnapshot = await getDocs(ownersRef);
@@ -56,6 +57,7 @@ export async function seedInitialData() {
         console.error("Error seeding owners:", error);
     }
     
+    // Seed Attendants
     const attendantsRef = collection(db, 'attendants');
     try {
         const attendantsSnapshot = await getDocs(attendantsRef);
@@ -63,6 +65,19 @@ export async function seedInitialData() {
             console.log("No attendants found, seeding initial data...");
             const initialAttendants = [
               { name: 'Ankit', avatarUrl: 'https://i.ibb.co/yFzdsKL/ankit.jpg' },
+              { name: 'Ashmit', avatarUrl: 'https://picsum.photos/seed/ashmit/100/100' },
+            ];
+            for (const attendant of initialAttendants) {
+                await addDoc(attendantsRef, attendant);
+            }
+            console.log("Initial attendants seeded.");
+        }
+    } catch (error) {
+        console.error("Error seeding attendants:", error);
+    }
+}
+
+export { db };
               { name: 'Ashmit', avatarUrl: 'https://picsum.photos/seed/ashmit/100/100' },
             ];
             for (const attendant of initialAttendants) {
